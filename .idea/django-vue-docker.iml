@@ -13,9 +13,8 @@
     </facet>
   </component>
   <component name="NewModuleRootManager">
-    <content url="file://$MODULE_DIR$">
-      <excludeFolder url="file://$MODULE_DIR$/backend/venv" />
-    </content>
+    <content url="file://$MODULE_DIR$/backend" />
+    <content url="file://$MODULE_DIR$/frontend" />
     <orderEntry type="jdk" jdkName="Remote Python 3.11.2 Docker Compose (backend)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
