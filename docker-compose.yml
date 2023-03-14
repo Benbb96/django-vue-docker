@@ -7,25 +7,35 @@ services:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
+  rabbitmq:
+    image: rabbitmq
+    ports:
+      - 5672:5672
   backend:
     build: backend/
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./backend:/backend
     ports:
-      - "8080:8000"
-    environment:
-      - POSTGRES_NAME=postgres
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - 8080:8000
     depends_on:
       - db
+      - rabbitmq
+    restart: on-failure
+  celery:
+    build: backend/
+    command: celery -A project worker -l INFO
+    depends_on:
+      - db
+      - rabbitmq
+      - backend
+    restart: on-failure
   frontend:
     build: frontend/
     command: npm run dev
     volumes:
       - ./frontend/src:/frontend/src
     ports:
-      - "8081:3000"
+      - 8081:3000
     depends_on:
       - backend

@@ -1,2 +1,4 @@
+Celery
 Django
+djangorestframework
 psycopg2
