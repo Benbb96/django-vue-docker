@@ -9,6 +9,7 @@ from tasks import add_review
 class ActorViewSet(viewsets.ModelViewSet):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
+    pagination_class = None
 
 
 class SmallResultsSetPagination(PageNumberPagination):

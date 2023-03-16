@@ -1,4 +1,5 @@
 Celery
 Django
+django-cors-headers
 djangorestframework
 psycopg2
