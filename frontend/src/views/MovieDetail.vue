@@ -35,43 +35,18 @@
             Average grade : <v-chip>{{store.averageGradeForSelectedMovie}} / 5</v-chip>
           </p>
 
-          <h2>Add a review</h2>
-          <v-form @submit.prevent="submitReview">
-            <v-slider
-              label="Grade"
-              v-model="newReview.value"
-              :min="1"
-              :max="5"
-              :step="1"
-              thumb-label
-              :error-messages="newReview.errors"
-            >
-              <template #append>
-                <v-btn type="submit" :loading="newReview.loading">
-                  Send
-                </v-btn>
-              </template>
-            </v-slider>
-          </v-form>
+          <AddReview :movie-id="route.params.id"></AddReview>
         </v-col>
       </v-row>
     </div>
-    <v-snackbar v-model="snackbar.display">
-      {{ snackbar.text }}
-
-      <template v-slot:actions>
-        <v-btn color="pink" variant="text" @click="snackbar.display = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
   </v-container>
 </template>
 
 <script setup>
 import {useAppStore} from "@/store/app"
 import {useRoute} from "vue-router"
-import {onMounted, reactive} from "vue"
+import {onMounted} from "vue"
+import AddReview from "@/components/AddReview.vue"
 
 const store = useAppStore()
 const route = useRoute()
@@ -82,40 +57,6 @@ onMounted(async () => {
     await store.fetchMovie(route.params.id)
   }
 })
-
-const newReview = reactive({
-  value: null,
-  errors: [],
-  loading: false
-})
-
-let snackbar = reactive({
-  text: '',
-  display: false
-})
-
-const submitReview = async() => {
-  newReview.errors = []
-  newReview.loading = true
-  const res = await fetch("http://localhost:8080/reviews/", {
-    method: "post",
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({
-      movie: route.params.id,
-      grade: newReview.value
-    })
-  })
-  newReview.loading = false
-  // Handle errors
-  if (res.status === 400) {
-    const errors = await res.json()
-    newReview.errors = errors.grade
-  } else {
-    snackbar.display = true
-    snackbar.text = 'Review is being added to this movie'
-    newReview.value = null
-  }
-}
 </script>
 
 <style scoped>

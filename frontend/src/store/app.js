@@ -9,7 +9,12 @@ export const useAppStore = defineStore('app', {
     next: null,
     previous: null,
     count: 0,
-    selectedMovie: null
+    selectedMovie: null,
+    snackbar: {
+      display: false,
+      text: '',
+      color: null
+    }
   }),
   getters: {
     averageGradeForSelectedMovie: (state) => {
@@ -48,6 +53,11 @@ export const useAppStore = defineStore('app', {
     getActorDisplay(id) {
       const actor = this.actors.find(a => a.id === id)
       return actor.first_name + ' ' + actor.last_name
+    },
+    displaySnackbar(text, color='success') {
+      this.snackbar.display = true
+      this.snackbar.text = text
+      this.snackbar.color = color
     }
   }
 })
