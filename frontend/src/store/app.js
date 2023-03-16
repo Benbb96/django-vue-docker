@@ -31,7 +31,11 @@ export const useAppStore = defineStore('app', {
       const res = await fetch("http://localhost:8080/actors/")
         .then(response => response.json())
       this.isLoading = false
-      this.actors = res
+      this.actors = res.map(actor => {
+        return {
+          value: actor.id,
+          title: actor.first_name + ' ' + actor.last_name}
+      })
     },
     async fetchMovies() {
       this.isLoading = true
@@ -49,10 +53,6 @@ export const useAppStore = defineStore('app', {
         .then(response => response.json())
       this.isLoading = false
       this.selectedMovie = res
-    },
-    getActorDisplay(id) {
-      const actor = this.actors.find(a => a.id === id)
-      return actor.first_name + ' ' + actor.last_name
     },
     displaySnackbar(text, color='success') {
       this.snackbar.display = true

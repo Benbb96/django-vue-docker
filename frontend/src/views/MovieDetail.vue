@@ -11,19 +11,7 @@
 
       <v-row>
         <v-col cols="12" sm="4">
-          <v-card>
-            <v-card-title>Actors</v-card-title>
-            <v-card-text>
-              <v-list v-if="store.selectedMovie.actors.length">
-                <v-list-item v-for="actorId in store.selectedMovie.actors" :key="actorId">
-                  {{store.getActorDisplay(actorId)}}
-                </v-list-item>
-              </v-list>
-              <p v-else>
-                No actor in this movie...
-              </p>
-            </v-card-text>
-          </v-card>
+          <Actors :movie-id="route.params.id"></Actors>
         </v-col>
         <v-col cols="12" sm="8">
           <p v-if="store.selectedMovie.description">
@@ -47,6 +35,7 @@ import {useAppStore} from "@/store/app"
 import {useRoute} from "vue-router"
 import {onMounted} from "vue"
 import AddReview from "@/components/AddReview.vue"
+import Actors from "@/components/Actors.vue"
 
 const store = useAppStore()
 const route = useRoute()
