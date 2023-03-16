@@ -42,7 +42,7 @@
 
 <script setup>
 import {useAppStore} from "@/store/app"
-import {reactive} from "vue";
+import {reactive} from "vue"
 
 const store = useAppStore()
 

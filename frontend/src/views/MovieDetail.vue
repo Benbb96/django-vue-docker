@@ -14,15 +14,11 @@
           <Actors :movie-id="route.params.id"></Actors>
         </v-col>
         <v-col cols="12" sm="8">
-          <p v-if="store.selectedMovie.description">
-            Description : <span class="font-italic">{{store.selectedMovie.description}}</span>
-          </p>
-          <p v-else>No description.</p>
+          <Description :movie-id="route.params.id"></Description>
 
           <p v-if="store.selectedMovie.review_set.length">
             Average grade : <v-chip>{{store.averageGradeForSelectedMovie}} / 5</v-chip>
           </p>
-
           <AddReview :movie-id="route.params.id"></AddReview>
         </v-col>
       </v-row>
@@ -36,6 +32,7 @@ import {useRoute} from "vue-router"
 import {onMounted} from "vue"
 import AddReview from "@/components/AddReview.vue"
 import Actors from "@/components/Actors.vue"
+import Description from "@/components/Description.vue"
 
 const store = useAppStore()
 const route = useRoute()
@@ -47,10 +44,3 @@ onMounted(async () => {
   }
 })
 </script>
-
-<style scoped>
-p {
-  margin-bottom: 1em;
-}
-</style>
-
